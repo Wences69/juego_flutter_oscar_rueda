@@ -6,20 +6,25 @@ import 'EmberPlayer.dart';
 
 class BarraVida extends PositionComponent {
   final EmberPlayerBody jugador;
+  final double tamanoX, tamanoY;
+  final double offsetX = 45.0;
+  final double offsetY = 64.0;
+  final double offsetXPaint = 101.25;
+  final double offsetYPaint = 12.0;
 
-  BarraVida(this.jugador);
+  BarraVida(this.jugador, this.tamanoX, this.tamanoY);
 
   @override
   void render(Canvas c) {
-    final barraVidaWidth = 600.0;
-    final barraVidaHeight = 60.0;
+    final barraVidaWidth = 450.0*tamanoX;
+    final barraVidaHeight = 48.0*tamanoY;
     final vidaActualWidth = (jugador.iVidas / 3) * barraVidaWidth; // Considerando que iVidas va de 0 a 3
 
     // Dibujar el contorno de la barra de vida
     c.drawRect(
       Rect.fromPoints(
-        Offset(60, 80), // Añadir margen izquierdo y superior
-        Offset(60 + barraVidaWidth, 80 + barraVidaHeight), // Añadir margen izquierdo y superior
+        Offset(offsetX*tamanoX, offsetY*tamanoY), // Añadir margen izquierdo y superior
+        Offset(offsetX*tamanoX + barraVidaWidth, offsetY*tamanoY + barraVidaHeight), // Añadir margen izquierdo y superior
       ),
       Paint()..color = Colors.black,
     );
@@ -27,8 +32,8 @@ class BarraVida extends PositionComponent {
     // Dibujar la barra de vida actual
     c.drawRect(
       Rect.fromPoints(
-        Offset(60, 80), // Añadir margen izquierdo y superior
-        Offset(60 + vidaActualWidth, 80 + barraVidaHeight), // Añadir margen izquierdo y superior
+        Offset(offsetX*tamanoX, offsetY*tamanoY), // Añadir margen izquierdo y superior
+        Offset(offsetX*tamanoX + vidaActualWidth, offsetY*tamanoY + barraVidaHeight), // Añadir margen izquierdo y superior
       ),
       Paint()..color = Colors.green,
     );
@@ -43,7 +48,7 @@ class BarraVida extends PositionComponent {
     );
 
     textPainter.layout();
-    textPainter.paint(c, Offset(135, 15)); // Ajustar posición según el diseño
+    textPainter.paint(c, Offset(offsetXPaint*tamanoX, offsetYPaint*tamanoY)); // Ajustar posición según el diseño
   }
 
   @override

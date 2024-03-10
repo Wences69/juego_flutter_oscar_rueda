@@ -5,13 +5,13 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:flutter/services.dart';
 
 import '../bodies/GotaBody.dart';
 import '../bodies/TierraBody.dart';
 import '../elementos/Estrella.dart';
 import '../players/BarraVida.dart';
 import '../players/EmberPlayer.dart';
-import '../players/EmberPlayer2.dart';
 import '../players/WaterPlayer.dart';
 
 import 'package:flame_forge2d/flame_forge2d.dart';
@@ -33,7 +33,7 @@ class OscarGame extends Forge2DGame with
   late double tamanyo;
 
   late EmberPlayerBody _player;
-  late EmberPlayer2 _player2;
+  late EmberPlayerBody _player2;
   late WaterPlayer _water;
   late BarraVida barraVida;
 
@@ -50,13 +50,16 @@ class OscarGame extends Forge2DGame with
       'heart.png',
       'star.png',
       'water_enemy.png',
-      'tilemap1_32.png',
+      'tilemap1_32.png'
     ]);
 
     wScale = size.x/gameWidth;
     hScale = size.y/gameHeigth;
 
     cameraComponent = CameraComponent(world: world);
+    // Everything in this tutorial assumes that the position
+    // of the `CameraComponent`s viewfinder (where the camera is looking)
+    // is in the top left corner, that's why we set the anchor here.
     cameraComponent.viewfinder.anchor = Anchor.topLeft;
     addAll([cameraComponent, world]);
 
@@ -88,7 +91,11 @@ class OscarGame extends Forge2DGame with
 
     _player = EmberPlayerBody(
         initialPosition: Vector2(200, canvasSize.y-canvasSize.y/2),
-        tamano: Vector2(64*wScale, 64*hScale)
+        tamano: Vector2(64*wScale, 64*hScale),
+        keyAbajo: LogicalKeyboardKey.keyS,
+        keyArriba: LogicalKeyboardKey.keyW,
+        keyDerecha: LogicalKeyboardKey.keyD,
+        keyIzquierda: LogicalKeyboardKey.keyA
     );
     _player.onBeginContact=InicioContactosDelJuego;
     world.add(_player);
@@ -98,24 +105,37 @@ class OscarGame extends Forge2DGame with
     );
     world.add(_water);
 
-    _player2 = EmberPlayer2(
-        position: Vector2(200, canvasSize.y-100),
-        size: Vector2(64*wScale, 64*hScale)
+    _player2 = EmberPlayerBody(
+        initialPosition: Vector2(400, canvasSize.y-canvasSize.y/2),
+        tamano: Vector2(64*wScale, 64*hScale),
+        keyAbajo: LogicalKeyboardKey.arrowDown,
+        keyArriba: LogicalKeyboardKey.arrowUp,
+        keyDerecha: LogicalKeyboardKey.arrowRight,
+        keyIzquierda: LogicalKeyboardKey.arrowLeft
     );
-
+    _player2.onBeginContact=InicioContactosDelJuegoPlayerDos;
     world.add(_player2);
 
-    barraVida = BarraVida(_player);
+    barraVida = BarraVida(_player, wScale, hScale);
     world.add(barraVida);
   }
 
   void InicioContactosDelJuego(Object objeto,Contact contact){
     if(objeto is GotaBody){
       _player.iVidas--;
-      print('Vidas: ' + _player.iVidas.toString());
       if(_player.iVidas==0){
         _player.removeFromParent();
       }
     }
   }
+
+  void InicioContactosDelJuegoPlayerDos(Object objeto,Contact contact){
+    if(objeto is GotaBody){
+      _player2.iVidas--;
+      if(_player2.iVidas==0){
+        _player2.removeFromParent();
+      }
+    }
+  }
+
 }
