@@ -8,7 +8,10 @@ import '../games/OscarGame.dart';
 
 // Ember
 class EmberPlayer extends SpriteAnimationComponent with HasGameRef<OscarGame> {
-  EmberPlayer({required super.position, required super.size}) : super(anchor: Anchor.center);
+  EmberPlayer({
+    required super.position,
+    required super.size
+  }) : super(anchor: Anchor.center);
 
   @override
   void onLoad() {

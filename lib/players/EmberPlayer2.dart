@@ -4,14 +4,12 @@ import 'package:flame/extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../elementos/Estrella.dart';
 import '../elementos/Gota.dart';
 import '../games/OscarGame.dart';
 
 class EmberPlayer2 extends SpriteAnimationComponent
-    with HasGameRef<OscarGame>,KeyboardHandler,CollisionCallbacks {
-
+    with HasGameRef<OscarGame>, KeyboardHandler, CollisionCallbacks {
   int horizontalDirection = 0;
   int verticalDirection = 0;
   final Vector2 velocidad = Vector2.zero();
@@ -32,13 +30,15 @@ class EmberPlayer2 extends SpriteAnimationComponent
   double posicionInicialY = 0.0;
 
   EmberPlayer2({
-    required super.position, super.size
-  }){
+    required super.position,
+    super.size,
+  }) {
     posicionInicialY = position.y;
   }
 
   @override
   Future<void> onLoad() async {
+    // Configurar animación Ember2
     animation = SpriteAnimation.fromFrameData(
       game.images.fromCache('ember.png'),
       SpriteAnimationData.sequenced(
@@ -48,13 +48,14 @@ class EmberPlayer2 extends SpriteAnimationComponent
       ),
     );
 
+    // Configurar hitbox
     final defaultPaint = Paint()
       ..color = _defaultColor
       ..style = PaintingStyle.stroke;
 
     hitbox = RectangleHitbox()
       ..paint = defaultPaint
-      ..isSolid=true
+      ..isSolid = true
       ..renderShape = true;
     add(hitbox);
 
@@ -63,11 +64,10 @@ class EmberPlayer2 extends SpriteAnimationComponent
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    // TODO: implement onCollision
-    if(other is Gota){
+    // Manejar colisiones
+    if (other is Gota) {
       this.removeFromParent();
-    }
-    else if(other is Estrella){
+    } else if (other is Estrella) {
       other.removeFromParent();
     }
     super.onCollision(intersectionPoints, other);
@@ -97,117 +97,35 @@ class EmberPlayer2 extends SpriteAnimationComponent
 
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    /*if (position.x >= screenWidth - width / 2){
-      if (keysPressed.contains(LogicalKeyboardKey.arrowUp) && enLaPared){
-        saltar();
-        derecha = !derecha;
-      }
-    }
+    // Eventos de teclado
 
-    else if (position.x <= width / 2){
-      if (keysPressed.contains(LogicalKeyboardKey.arrowUp) && enLaPared){
-        saltar();
-        derecha = !derecha;
-      }
-    }
-
-
-    if (keysPressed.contains(LogicalKeyboardKey.arrowUp) && !enElAire) {
-      saltar();
-    }*/
     horizontalDirection = 0;
     verticalDirection = 0;
-    // TODO: implement onKeyEvent
 
-    if (keysPressed.contains(LogicalKeyboardKey.numpad4) &&
-        keysPressed.contains(LogicalKeyboardKey.numpad2)) {
+    if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
       horizontalDirection = -1;
-      verticalDirection = 1;
-    }
-    else if (keysPressed.contains(LogicalKeyboardKey.numpad6) &&
-        keysPressed.contains(LogicalKeyboardKey.numpad2)) {
-      horizontalDirection = 1;
-      verticalDirection = 1;
-    }
-
-    else if (keysPressed.contains(LogicalKeyboardKey.numpad6) &&
-        keysPressed.contains(LogicalKeyboardKey.numpad8)) {
-      horizontalDirection = 1;
-      verticalDirection = -1;
-    }
-
-    else if (keysPressed.contains(LogicalKeyboardKey.numpad4) &&
-        keysPressed.contains(LogicalKeyboardKey.numpad8)) {
-      horizontalDirection = -1;
-      verticalDirection = -1;
-    }
-
-    else if (keysPressed.contains(LogicalKeyboardKey.numpad6)) {
+    } else if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
       horizontalDirection = 1;
     }
 
-    else if (keysPressed.contains(LogicalKeyboardKey.numpad4)) {
-      horizontalDirection = -1;
-    }
-
-    else if (keysPressed.contains(LogicalKeyboardKey.numpad2)) {
+    if (keysPressed.contains(LogicalKeyboardKey.arrowUp)) {
+      verticalDirection = -1;
+    } else if (keysPressed.contains(LogicalKeyboardKey.arrowDown)) {
       verticalDirection = 1;
     }
-
-    else if (keysPressed.contains(LogicalKeyboardKey.numpad8)) {
-      verticalDirection = -1;
-    }
-
 
     return true;
   }
 
   @override
   void update(double dt) {
+    // Actualizar posición del jugador Ember2
     velocidad.x = horizontalDirection * aceleracion;
     velocidad.y = verticalDirection * aceleracion;
     position += velocidad * dt;
 
     screenWidth = gameRef.size.x;
-    /*if (enElAire) {
-      velocidad.y += gravedad * dt;
-    }
-
-    // Verificar si ha tocado el suelo
-    if (position.y >= posicionInicialY) {
-      position.y = posicionInicialY;
-      enElAire = false;
-      velocidad.y = 0;
-    }
-
-    //Movimiento hacia la izquierda si no está en el aire
-    if (position.x > screenWidth - width / 2 && !enElAire) {
-      derecha = !derecha;
-      enLaPared = false;
-    }
-
-    //Se queda en la pared si está en el aire cuando está en la derecha
-    if (position.x >= screenWidth - width / 2 && enElAire){
-      position.x = screenWidth - width / 2;
-      enLaPared = true;
-    }
-
-    //Movimiento hacia la derecha si no está en el aire
-    if (position.x < width / 2 && !enElAire) {
-      derecha = !derecha;
-      enLaPared = false;
-    }
-
-    //Se queda en la pared si está en el aire cuando está en la izquierda
-    if (position.x <= width / 2 && enElAire) {
-      position.x = width / 2;
-      enLaPared = true;
-    }
-
-    // Cambiar la dirección basada en la variable 'derecha'
-    horizontalDirection = derecha ? 1 : -1;*/
 
     super.update(dt);
   }
-
 }
