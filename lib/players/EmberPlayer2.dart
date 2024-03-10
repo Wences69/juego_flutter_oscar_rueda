@@ -14,7 +14,7 @@ class EmberPlayer2 extends SpriteAnimationComponent
   int horizontalDirection = 0;
   int verticalDirection = 0;
   final Vector2 velocidad = Vector2.zero();
-  double aceleracion = 500;
+  double aceleracion = 200;
   bool derecha = true;
 
   double screenWidth = 0;
@@ -96,24 +96,70 @@ class EmberPlayer2 extends SpriteAnimationComponent
 
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    horizontalDirection = 0;
-    verticalDirection = 0;
-
-    if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
-      horizontalDirection = -1;
-    } else if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
-      horizontalDirection = 1;
+    /*if (position.x >= screenWidth - width / 2){
+      if (keysPressed.contains(LogicalKeyboardKey.arrowUp) && enLaPared){
+        saltar();
+        derecha = !derecha;
+      }
     }
 
-    if (keysPressed.contains(LogicalKeyboardKey.arrowUp)) {
-      verticalDirection = -1;
-    } else if (keysPressed.contains(LogicalKeyboardKey.arrowDown)) {
+    else if (position.x <= width / 2){
+      if (keysPressed.contains(LogicalKeyboardKey.arrowUp) && enLaPared){
+        saltar();
+        derecha = !derecha;
+      }
+    }
+
+
+    if (keysPressed.contains(LogicalKeyboardKey.arrowUp) && !enElAire) {
+      saltar();
+    }*/
+    horizontalDirection = 0;
+    verticalDirection = 0;
+    // TODO: implement onKeyEvent
+
+    if (keysPressed.contains(LogicalKeyboardKey.numpad4) &&
+        keysPressed.contains(LogicalKeyboardKey.numpad2)) {
+      horizontalDirection = -1;
+      verticalDirection = 1;
+    }
+    else if (keysPressed.contains(LogicalKeyboardKey.numpad6) &&
+        keysPressed.contains(LogicalKeyboardKey.numpad2)) {
+      horizontalDirection = 1;
       verticalDirection = 1;
     }
 
+    else if (keysPressed.contains(LogicalKeyboardKey.numpad6) &&
+        keysPressed.contains(LogicalKeyboardKey.numpad8)) {
+      horizontalDirection = 1;
+      verticalDirection = -1;
+    }
+
+    else if (keysPressed.contains(LogicalKeyboardKey.numpad4) &&
+        keysPressed.contains(LogicalKeyboardKey.numpad8)) {
+      horizontalDirection = -1;
+      verticalDirection = -1;
+    }
+
+    else if (keysPressed.contains(LogicalKeyboardKey.numpad6)) {
+      horizontalDirection = 1;
+    }
+
+    else if (keysPressed.contains(LogicalKeyboardKey.numpad4)) {
+      horizontalDirection = -1;
+    }
+
+    else if (keysPressed.contains(LogicalKeyboardKey.numpad2)) {
+      verticalDirection = 1;
+    }
+
+    else if (keysPressed.contains(LogicalKeyboardKey.numpad8)) {
+      verticalDirection = -1;
+    }
+
+
     return true;
   }
-
 
   @override
   void update(double dt) {
@@ -162,4 +208,5 @@ class EmberPlayer2 extends SpriteAnimationComponent
 
     super.update(dt);
   }
+
 }

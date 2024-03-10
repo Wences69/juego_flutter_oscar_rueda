@@ -4,6 +4,7 @@ import 'package:flame/extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../elementos/Estrella.dart';
 import '../elementos/Gota.dart';
 import '../games/OscarGame.dart';
@@ -14,7 +15,7 @@ class EmberPlayer extends SpriteAnimationComponent
   int horizontalDirection = 0;
   int verticalDirection = 0;
   final Vector2 velocidad = Vector2.zero();
-  double aceleracion = 500;
+  double aceleracion = 200;
   bool derecha = true;
 
   double screenWidth = 0;
@@ -119,7 +120,7 @@ class EmberPlayer extends SpriteAnimationComponent
     // TODO: implement onKeyEvent
 
     if (keysPressed.contains(LogicalKeyboardKey.keyA) &&
-        keysPressed.contains(LogicalKeyboardKey.keyW)) {
+        keysPressed.contains(LogicalKeyboardKey.keyS)) {
       horizontalDirection = -1;
       verticalDirection = 1;
     }

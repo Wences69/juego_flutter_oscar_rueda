@@ -85,18 +85,26 @@ packages:
     dependency: "direct main"
     description:
       name: flame
-      sha256: "61c42b966a6b1f44ee093194e6701d45b14fdda1859c14fe68a39489454bfbd4"
+      sha256: "2a2352741500ce47823dcf212f06b23e9bdb622454eab90244ee6da58e23b488"
       url: "https://pub.dev"
     source: hosted
-    version: "1.14.0"
+    version: "1.15.0"
+  flame_forge2d:
+    dependency: "direct main"
+    description:
+      name: flame_forge2d
+      sha256: "3d0d694c79a6cea624db4a995cb8189509b06ac9d4366584d07dfd99aecbb30f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.16.0+5"
   flame_tiled:
     dependency: "direct main"
     description:
       name: flame_tiled
-      sha256: "83efffb9e050ab7f9a280efcb32ff43d1fc9613bbc6911ba6a2af6de527ace13"
+      sha256: "5c8a30d8bd1f09a40bb37527c1aa17758800848cd0d561bb963134cfb621fd6b"
       url: "https://pub.dev"
     source: hosted
-    version: "1.18.3"
+    version: "1.18.4"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -115,14 +123,22 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  forge2d:
+    dependency: transitive
+    description:
+      name: forge2d
+      sha256: a16bee7a5bdf3538ef4a51ae9b6befb39872d3518b653fc7b8756ef49f7fcf96
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.12.2"
   js:
     dependency: transitive
     description:
       name: js
-      sha256: "4186c61b32f99e60f011f7160e32c89a758ae9b1d0c6d28e2c02ef0382300e2b"
+      sha256: c1b2e9b5ea78c45e1a0788d29606ba27dc5f71f019f32ca5140f61ef071838cf
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.0"
+    version: "0.7.1"
   lints:
     dependency: transitive
     description:
