@@ -12,10 +12,12 @@ import '../players/EmberPlayer.dart';
 import '../players/EmberPlayer2.dart';
 import '../players/WaterPlayer.dart';
 
-class OscarGame extends FlameGame with HasKeyboardHandlerComponents {
+import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flame_forge2d/forge2d_game.dart';
+
+class OscarGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCollisionDetection {
   OscarGame();
 
-  final world = World();
   late final CameraComponent cameraComponent;
   late TiledComponent mapComponent;
 
@@ -25,7 +27,9 @@ class OscarGame extends FlameGame with HasKeyboardHandlerComponents {
   double wScale = 1.0;
   double hScale = 1.0;
 
-  late EmberPlayer _player;
+  late double tamanyo;
+
+  late EmberPlayerBody _player;
   late EmberPlayer2 _player2;
   late WaterPlayer _water;
 
@@ -79,8 +83,9 @@ class OscarGame extends FlameGame with HasKeyboardHandlerComponents {
       }
     }
 
-    _player = EmberPlayer(
-      position: Vector2(20, canvasSize.y-100),
+    _player = EmberPlayerBody(
+        initialPosition: Vector2(200, canvasSize.y-canvasSize.y/2),
+        tamano: Vector2(64*wScale, 64*hScale)
     );
     world.add(_player);
 

@@ -59,6 +59,5 @@ class TierraBody extends BodyComponent with ContactCallbacks
     //FixtureDef fixtureDef=FixtureDef(shape);
     cuerpo.createFixture(fixtureDef);
     return cuerpo;
-
   }
 }
