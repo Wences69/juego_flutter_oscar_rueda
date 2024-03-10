@@ -2,15 +2,18 @@ import 'dart:ui';
 
 import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 
-import '../players/EmberPlayer.dart';
+import '../elementos/Estrella.dart';
+import '../elementos/Gota.dart';
 
-class OscarGame extends FlameGame {
+class OscarGame extends FlameGame with HasKeyboardHandlerComponents {
+  OscarGame();
+
   final world = World();
   late final CameraComponent cameraComponent;
-  late EmberPlayer _player;
   late TiledComponent mapComponent;
 
   double gameWidth = 1920;
@@ -19,9 +22,11 @@ class OscarGame extends FlameGame {
   double wScale = 1.0;
   double hScale = 1.0;
 
+  late double tamanyo;
+
   @override
   Color backgroundColor() {
-    return Color.fromRGBO(102, 178, 255, 1.0);
+    return const Color.fromARGB(255, 173, 223, 255);
   }
 
   @override
@@ -38,17 +43,35 @@ class OscarGame extends FlameGame {
     wScale = size.x/gameWidth;
     hScale = size.y/gameHeigth;
 
-
     cameraComponent = CameraComponent(world: world);
     cameraComponent.viewfinder.anchor = Anchor.topLeft;
     addAll([cameraComponent, world]);
 
-    mapComponent = await TiledComponent.load("mapa1.tmx", Vector2(32*wScale, 32*hScale));
+    mapComponent = await TiledComponent.load('mapa1.tmx', Vector2(32*wScale, 32*hScale));
     world.add(mapComponent);
 
-    _player = EmberPlayer(
-      position: Vector2(128, canvasSize.y - 150),
-    );
-    world.add(_player);
+    ObjectGroup? estrellas = mapComponent.tileMap.getLayer<ObjectGroup>("estrellas");
+
+    if (estrellas != null) {
+      for (final estrella in estrellas.objects) {
+        Estrella spriteStar = Estrella(
+          position: Vector2(estrella.x * wScale, estrella.y * hScale),
+          size: Vector2(32 * wScale, 32 * hScale),
+        );
+        add(spriteStar);
+      }
+    }
+
+    ObjectGroup? gotas = mapComponent.tileMap.getLayer<ObjectGroup>("gotas");
+
+    if (gotas != null) {
+      for (final gota in gotas.objects) {
+        Gota spriteGota = Gota(
+          position: Vector2(gota.x * wScale, gota.y * hScale),
+          size: Vector2(32 * wScale, 32 * hScale),
+        );
+        world.add(spriteGota);
+      }
+    }
   }
 }

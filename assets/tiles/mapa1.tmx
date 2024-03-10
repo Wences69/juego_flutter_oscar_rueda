@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
  <tileset firstgid="1" source="tilemap1_32.tsx"/>
+ <objectgroup id="2" name="estrellas">
+   <object id="1" x="781.333" y="497.333">
+    <point/>
+   </object>
+   <object id="2" x="428" y="506.667">
+    <point/>
+   </object>
+   <object id="3" x="1000" y="628">
+    <point/>
+   </object>
+   <object id="4" x="245.333" y="824">
+    <point/>
+   </object>
+   <object id="5" x="592" y="821.333">
+    <point/>
+   </object>
+   <object id="6" x="790.667" y="853.333">
+    <point/>
+   </object>
+  </objectgroup>
+  <objectgroup id="3" name="gotas">
+   <object id="8" x="345.455" y="451.515">
+    <point/>
+   </object>
+   <object id="9" x="399.5" y="504">
+    <point/>
+   </object>
+   <object id="10" x="339" y="500">
+    <point/>
+   </object>
+  </objectgroup>
  <layer id="1" name="suelos" width="30" height="20">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

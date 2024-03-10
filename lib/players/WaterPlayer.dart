@@ -1,17 +1,17 @@
 import 'package:flame/components.dart';
-import 'package:juego_flutter_oscar_rueda/games/OscarGame.dart';
+import '../games/OscarGame.dart';
 
-class EmberPlayer extends SpriteAnimationComponent with HasGameRef<OscarGame> {
-  EmberPlayer({
+class WaterPlayer extends SpriteAnimationComponent with HasGameRef<OscarGame> {
+  WaterPlayer({
     required super.position,
   }) : super(size: Vector2.all(64), anchor: Anchor.center);
 
   @override
   void onLoad() {
     animation = SpriteAnimation.fromFrameData(
-      game.images.fromCache('ember.png'),
+      game.images.fromCache('water_enemy.png'),
       SpriteAnimationData.sequenced(
-        amount: 4,
+        amount: 2,
         textureSize: Vector2.all(16),
         stepTime: 0.12,
       ),
