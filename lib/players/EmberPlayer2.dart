@@ -4,6 +4,7 @@ import 'package:flame/extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../elementos/Estrella.dart';
 import '../elementos/Gota.dart';
 import '../games/OscarGame.dart';
@@ -31,8 +32,8 @@ class EmberPlayer2 extends SpriteAnimationComponent
   double posicionInicialY = 0.0;
 
   EmberPlayer2({
-    required super.position,
-  }) : super(size: Vector2.all(64), anchor: Anchor.center) {
+    required super.position, super.size
+  }){
     posicionInicialY = position.y;
   }
 

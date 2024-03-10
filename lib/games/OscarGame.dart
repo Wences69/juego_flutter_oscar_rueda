@@ -7,8 +7,9 @@ import 'package:flame/game.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 
 import '../bodies/GotaBody.dart';
+import '../bodies/TierraBody.dart';
 import '../elementos/Estrella.dart';
-import '../elementos/Gota.dart';
+import '../players/BarraVida.dart';
 import '../players/EmberPlayer.dart';
 import '../players/EmberPlayer2.dart';
 import '../players/WaterPlayer.dart';
@@ -16,7 +17,8 @@ import '../players/WaterPlayer.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 
-class OscarGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCollisionDetection {
+class OscarGame extends Forge2DGame with
+    HasKeyboardHandlerComponents,HasCollisionDetection {
   OscarGame();
 
   late final CameraComponent cameraComponent;
@@ -33,6 +35,7 @@ class OscarGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCollisi
   late EmberPlayerBody _player;
   late EmberPlayer2 _player2;
   late WaterPlayer _water;
+  late BarraVida barraVida;
 
   @override
   Color backgroundColor() {
@@ -47,7 +50,7 @@ class OscarGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCollisi
       'heart.png',
       'star.png',
       'water_enemy.png',
-      'tilemap1_32.png'
+      'tilemap1_32.png',
     ]);
 
     wScale = size.x/gameWidth;
@@ -60,34 +63,34 @@ class OscarGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCollisi
     mapComponent = await TiledComponent.load('mapa1.tmx', Vector2(32*wScale, 32*hScale));
     world.add(mapComponent);
 
-    ObjectGroup? estrellas = mapComponent.tileMap.getLayer<ObjectGroup>("estrellas");
+    ObjectGroup? estrellas=mapComponent.tileMap.getLayer<ObjectGroup>("estrellas");
 
-    if (estrellas != null) {
-      for (final estrella in estrellas.objects) {
-        Estrella spriteStar = Estrella(
-          position: Vector2(estrella.x * wScale, estrella.y * hScale),
-          size: Vector2(32 * wScale, 32 * hScale),
-        );
-        add(spriteStar);
-      }
+    for(final estrella in estrellas!.objects){
+      Estrella spriteStar = Estrella(
+          position: Vector2(estrella.x * wScale,estrella.y * hScale),
+          size: Vector2(32*wScale, 32*hScale));
+      //spriteStar.sprite=Sprite(images.fromCache('star.png'));
+      add(spriteStar);
     }
 
-    ObjectGroup? gotas = mapComponent.tileMap.getLayer<ObjectGroup>("gotas");
+    ObjectGroup? gotas=mapComponent.tileMap.getLayer<ObjectGroup>("gotas");
 
-    if (gotas != null) {
-      for (final gota in gotas.objects) {
-        Gota spriteGota = Gota(
-          position: Vector2(gota.x * wScale, gota.y * hScale),
-          size: Vector2(32 * wScale, 32 * hScale),
-        );
-        world.add(spriteGota);
-      }
+    for(final gota in gotas!.objects){
+      /*Gota spriteGota = Gota(position: Vector2(gota.x * wScale,gota.y * hScale),
+          size: Vector2(32*wScale, 32*hScale));
+      world.add(spriteGota);*/
+
+      GotaBody gotaBody = GotaBody(posXY: Vector2(gota.x*wScale,gota.y*hScale),
+          tamWH: Vector2(32*wScale,32*hScale));
+      //gotaBody.onBeginContact=InicioContactosDelJuego;
+      add(gotaBody);
     }
 
     _player = EmberPlayerBody(
         initialPosition: Vector2(200, canvasSize.y-canvasSize.y/2),
         tamano: Vector2(64*wScale, 64*hScale)
     );
+    _player.onBeginContact=InicioContactosDelJuego;
     world.add(_player);
 
     _water = WaterPlayer(
@@ -96,17 +99,22 @@ class OscarGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCollisi
     world.add(_water);
 
     _player2 = EmberPlayer2(
-      position: Vector2(200, canvasSize.y-100),
+        position: Vector2(200, canvasSize.y-100),
+        size: Vector2(64*wScale, 64*hScale)
     );
+
     world.add(_player2);
 
-    void InicioContactosDelJuego(Object objeto,Contact contact) {
-      if (objeto is GotaBody) {
-        _player.iVidas--;
-        print('Vidas: ' + _player.iVidas.toString());
-        if (_player.iVidas == 0) {
-          _player.removeFromParent();
-        }
+    barraVida = BarraVida(_player);
+    world.add(barraVida);
+  }
+
+  void InicioContactosDelJuego(Object objeto,Contact contact){
+    if(objeto is GotaBody){
+      _player.iVidas--;
+      print('Vidas: ' + _player.iVidas.toString());
+      if(_player.iVidas==0){
+        _player.removeFromParent();
       }
     }
   }

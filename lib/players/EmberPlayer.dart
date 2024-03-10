@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../games/OscarGame.dart';
 
-class EmberPlayer extends SpriteAnimationComponent
-    with HasGameRef<OscarGame> {
+class EmberPlayer extends SpriteAnimationComponent with HasGameRef<OscarGame> {
 
   EmberPlayer({
     required super.position, required super.size
@@ -152,8 +151,6 @@ class EmberPlayerBody extends BodyComponent with KeyboardHandler,ContactCallback
     return true;
   }
 
-
-
   @override
   void update(double dt) {
     // TODO: implement update
@@ -188,5 +185,4 @@ class EmberPlayerBody extends BodyComponent with KeyboardHandler,ContactCallback
 
     super.update(dt);
   }
-
 }
