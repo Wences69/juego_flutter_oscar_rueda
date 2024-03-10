@@ -6,6 +6,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 
+import '../bodies/GotaBody.dart';
 import '../elementos/Estrella.dart';
 import '../elementos/Gota.dart';
 import '../players/EmberPlayer.dart';
@@ -98,5 +99,15 @@ class OscarGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCollisi
       position: Vector2(200, canvasSize.y-100),
     );
     world.add(_player2);
+
+    void InicioContactosDelJuego(Object objeto,Contact contact) {
+      if (objeto is GotaBody) {
+        _player.iVidas--;
+        print('Vidas: ' + _player.iVidas.toString());
+        if (_player.iVidas == 0) {
+          _player.removeFromParent();
+        }
+      }
+    }
   }
 }

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
+
 import '../games/OscarGame.dart';
 
 class Gota extends SpriteAnimationComponent
@@ -32,8 +33,8 @@ class Gota extends SpriteAnimationComponent
 
     hitbox = RectangleHitbox()
       ..paint = defaultPaint
-      ..isSolid=true
-      ..renderShape = true;
+      ..isSolid=true;
+    //..renderShape = true;
     add(hitbox);
 
     super.onLoad();

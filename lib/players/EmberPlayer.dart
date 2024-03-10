@@ -99,59 +99,55 @@ class EmberPlayerBody extends BodyComponent with KeyboardHandler,ContactCallback
     if(isKeyDown) {
       if (keysPressed.contains(LogicalKeyboardKey.keyA) &&
           keysPressed.contains(LogicalKeyboardKey.keyS)) {
-        horizontalDirection = -1;
-        verticalDirection = 1;
+        horizontalDirection = -3;
+        verticalDirection = 3;
       }
       else if (keysPressed.contains(LogicalKeyboardKey.keyD) &&
           keysPressed.contains(LogicalKeyboardKey.keyS)) {
-        horizontalDirection = 1;
-        verticalDirection = 1;
+        horizontalDirection = 3;
+        verticalDirection = 3;
       }
 
       else if (keysPressed.contains(LogicalKeyboardKey.keyD) &&
           keysPressed.contains(LogicalKeyboardKey.keyW)) {
-        horizontalDirection = 1;
-        verticalDirection = -1;
+        horizontalDirection = 3;
+        verticalDirection = -3;
       }
 
       else if (keysPressed.contains(LogicalKeyboardKey.keyA) &&
           keysPressed.contains(LogicalKeyboardKey.keyW)) {
-        horizontalDirection = -1;
-        verticalDirection = -1;
+        horizontalDirection = -3;
+        verticalDirection = -3;
       }
 
       else if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
-        horizontalDirection = 1;
+        horizontalDirection = 3;
       }
 
       else if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
-        horizontalDirection = -1;
+        horizontalDirection = -3;
       }
 
       else if (keysPressed.contains(LogicalKeyboardKey.keyS)) {
-        verticalDirection = 1;
+        verticalDirection = 3;
       }
 
       else if (keysPressed.contains(LogicalKeyboardKey.keyW)) {
-        verticalDirection = -1;
+        verticalDirection = -3;
       }
 
       if(keysPressed.contains(LogicalKeyboardKey.space)){
-        if(blEspacioLiberado)jumpSpeed=2000;
-        blEspacioLiberado=false;
-        //body.gravityOverride=Vector2(0, -20);
+        if(blEspacioLiberado) { //jumpSpeed=2000;
+          blEspacioLiberado = false;
+          body.gravityOverride = Vector2(0, -40);
+        }
         //this.bodyDef?.gravityOverride=Vector2(0, -20);
       }
     }
     else if(isKeyUp){
-
       blEspacioLiberado=true;
+      body.gravityOverride = Vector2(0, 40);
       //}
-
-    }
-
-    else{
-
     }
     return true;
   }
@@ -163,18 +159,22 @@ class EmberPlayerBody extends BodyComponent with KeyboardHandler,ContactCallback
     // TODO: implement update
     /*velocidad.x = horizontalDirection * aceleracion; //v=a*t
     velocidad.y = verticalDirection * aceleracion; //v=a*t
-    //position += velocidad * dt; //d=v*t
+     //d=v*t
 
     position.x += velocidad.x * dt; //d=v*t
     position.y += velocidad.y * dt; //d=v*t*/
 
     velocidad.x = horizontalDirection * aceleracion;
     velocidad.y = verticalDirection * aceleracion;
-    velocidad.y += -1 * jumpSpeed;
-    jumpSpeed=0;
+
+    initialPosition += velocidad * dt;
+
+    /*velocidad.y += -1 * jumpSpeed;
+    jumpSpeed=0;*/
 
     //center.add((velocity * dt));
     body.applyLinearImpulse(velocidad*dt*1000);
+
     //body.applyAngularImpulse(3);
 
     if (horizontalDirection < 0 && emberPlayer.scale.x > 0) {
@@ -188,4 +188,5 @@ class EmberPlayerBody extends BodyComponent with KeyboardHandler,ContactCallback
 
     super.update(dt);
   }
+
 }

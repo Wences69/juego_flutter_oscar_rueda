@@ -1,11 +1,13 @@
+
 import 'package:flame_forge2d/body_component.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:forge2d/src/dynamics/body.dart';
+
 import '../elementos/Gota.dart';
 import '../games/OscarGame.dart';
 
 
-class GotaBody extends BodyComponent<OscarGame> with ContactCallbacks {
+class GotaBody extends BodyComponent<OscarGame> with ContactCallbacks{
   Vector2 posXY;
   Vector2 tamWH;
   double xIni=0;
@@ -39,7 +41,7 @@ class GotaBody extends BodyComponent<OscarGame> with ContactCallbacks {
     // TODO: implement onLoad
     await super.onLoad();
 
-    Gota gotaPlayer=Gota(position: Vector2.zero(), size: tamWH);
+    Gota gotaPlayer=Gota(position: Vector2.all(-21), size: tamWH);
     add(gotaPlayer);
 
     xIni=posXY.x;
