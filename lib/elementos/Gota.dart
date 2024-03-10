@@ -1,22 +1,25 @@
 import 'dart:ui';
-
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
 import '../games/OscarGame.dart';
 
-class Gota extends SpriteAnimationComponent
-    with HasGameRef<OscarGame> {
-  Gota({
-    required super.position, super.size
-  });
+class Gota extends SpriteAnimationComponent with HasGameRef<OscarGame> {
+  // Hitbox
   late ShapeHitbox hitbox;
+
   final _defaultColor = Colors.red;
 
+  // Constructor
+  Gota({
+    required super.position,
+    super.size,
+  });
 
   @override
   void onLoad() {
+    // Configuración de la animación
     animation = SpriteAnimation.fromFrameData(
       game.images.fromCache('water_enemy.png'),
       SpriteAnimationData.sequenced(
@@ -27,14 +30,16 @@ class Gota extends SpriteAnimationComponent
       ),
     );
 
+    // Configuración de la hitbox
     final defaultPaint = Paint()
       ..color = _defaultColor
       ..style = PaintingStyle.stroke;
 
     hitbox = RectangleHitbox()
       ..paint = defaultPaint
-      ..isSolid=true;
-    //..renderShape = true;
+      ..isSolid = true;
+
+    // Agregar el hitbox a la gota
     add(hitbox);
 
     super.onLoad();

@@ -15,7 +15,6 @@ class TierraBody extends BodyComponent with ContactCallbacks {
     required this.tiledBody,
     required this.scales});
 
-  // Método para cargar recursos y configurar el cuerpo físico de la tierra
   @override
   Future<void> onLoad() {
     renderBody = false;

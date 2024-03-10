@@ -32,7 +32,6 @@ class GotaBody extends BodyComponent<OscarGame> with ContactCallbacks {
     required this.gotaSize
   }) : super();
 
-  // Crear el cuerpo
   @override
   Body createBody() {
     BodyDef bodyDef = BodyDef(
