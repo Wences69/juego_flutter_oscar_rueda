@@ -8,6 +8,9 @@ import 'package:flame_tiled/flame_tiled.dart';
 
 import '../elementos/Estrella.dart';
 import '../elementos/Gota.dart';
+import '../players/EmberPlayer.dart';
+import '../players/EmberPlayer2.dart';
+import '../players/WaterPlayer.dart';
 
 class OscarGame extends FlameGame with HasKeyboardHandlerComponents {
   OscarGame();
@@ -22,7 +25,9 @@ class OscarGame extends FlameGame with HasKeyboardHandlerComponents {
   double wScale = 1.0;
   double hScale = 1.0;
 
-  late double tamanyo;
+  late EmberPlayer _player;
+  late EmberPlayer2 _player2;
+  late WaterPlayer _water;
 
   @override
   Color backgroundColor() {
@@ -73,5 +78,20 @@ class OscarGame extends FlameGame with HasKeyboardHandlerComponents {
         world.add(spriteGota);
       }
     }
+
+    _player = EmberPlayer(
+      position: Vector2(20, canvasSize.y-100),
+    );
+    world.add(_player);
+
+    _water = WaterPlayer(
+      position: Vector2(canvasSize.x/2 - 50, canvasSize.y/2 + 50),
+    );
+    world.add(_water);
+
+    _player2 = EmberPlayer2(
+      position: Vector2(200, canvasSize.y-100),
+    );
+    world.add(_player2);
   }
 }

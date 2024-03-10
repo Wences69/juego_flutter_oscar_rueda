@@ -3,7 +3,7 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import '../games/OscarGame.dart';
 
-class Estrella extends SpriteComponent  with HasGameRef<OscarGame>,CollisionCallbacks{
+class Estrella extends SpriteComponent with HasGameRef<OscarGame>,CollisionCallbacks{
 
   final _collisionStartColor = Colors.black87;
   final _defaultColor = Colors.red;
@@ -28,5 +28,4 @@ class Estrella extends SpriteComponent  with HasGameRef<OscarGame>,CollisionCall
 
     return super.onLoad();
   }
-
 }

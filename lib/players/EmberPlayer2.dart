@@ -8,7 +8,7 @@ import '../elementos/Estrella.dart';
 import '../elementos/Gota.dart';
 import '../games/OscarGame.dart';
 
-class EmberPlayer extends SpriteAnimationComponent
+class EmberPlayer2 extends SpriteAnimationComponent
     with HasGameRef<OscarGame>,KeyboardHandler,CollisionCallbacks {
 
   int horizontalDirection = 0;
@@ -30,7 +30,7 @@ class EmberPlayer extends SpriteAnimationComponent
 
   double posicionInicialY = 0.0;
 
-  EmberPlayer({
+  EmberPlayer2({
     required super.position,
   }) : super(size: Vector2.all(64), anchor: Anchor.center) {
     posicionInicialY = position.y;
@@ -96,71 +96,24 @@ class EmberPlayer extends SpriteAnimationComponent
 
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    /*if (position.x >= screenWidth - width / 2){
-      if (keysPressed.contains(LogicalKeyboardKey.arrowUp) && enLaPared){
-        saltar();
-        derecha = !derecha;
-      }
-    }
-
-    else if (position.x <= width / 2){
-      if (keysPressed.contains(LogicalKeyboardKey.arrowUp) && enLaPared){
-        saltar();
-        derecha = !derecha;
-      }
-    }
-
-
-    if (keysPressed.contains(LogicalKeyboardKey.arrowUp) && !enElAire) {
-      saltar();
-    }*/
     horizontalDirection = 0;
     verticalDirection = 0;
-    // TODO: implement onKeyEvent
 
-    if (keysPressed.contains(LogicalKeyboardKey.keyA) &&
-        keysPressed.contains(LogicalKeyboardKey.keyW)) {
+    if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
       horizontalDirection = -1;
-      verticalDirection = 1;
-    }
-
-    else if (keysPressed.contains(LogicalKeyboardKey.keyD) &&
-        keysPressed.contains(LogicalKeyboardKey.keyS)) {
-      horizontalDirection = 1;
-      verticalDirection = 1;
-    }
-
-    else if (keysPressed.contains(LogicalKeyboardKey.keyD) &&
-        keysPressed.contains(LogicalKeyboardKey.keyW)) {
-      horizontalDirection = 1;
-      verticalDirection = -1;
-    }
-
-    else if (keysPressed.contains(LogicalKeyboardKey.keyA) &&
-        keysPressed.contains(LogicalKeyboardKey.keyW)) {
-      horizontalDirection = -1;
-      verticalDirection = -1;
-    }
-
-    else if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
+    } else if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
       horizontalDirection = 1;
     }
 
-    else if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
-      horizontalDirection = -1;
-    }
-
-    else if (keysPressed.contains(LogicalKeyboardKey.keyS)) {
+    if (keysPressed.contains(LogicalKeyboardKey.arrowUp)) {
+      verticalDirection = -1;
+    } else if (keysPressed.contains(LogicalKeyboardKey.arrowDown)) {
       verticalDirection = 1;
     }
-
-    else if (keysPressed.contains(LogicalKeyboardKey.keyW)) {
-      verticalDirection = -1;
-    }
-
 
     return true;
   }
+
 
   @override
   void update(double dt) {
@@ -209,5 +162,4 @@ class EmberPlayer extends SpriteAnimationComponent
 
     super.update(dt);
   }
-
 }
