@@ -8,7 +8,6 @@ import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/services.dart';
 
 import '../bodies/GotaBody.dart';
-import '../bodies/TierraBody.dart';
 import '../elementos/Estrella.dart';
 import '../players/BarraVida.dart';
 import '../players/EmberPlayer.dart';
@@ -84,7 +83,7 @@ class OscarGame extends Forge2DGame with
       world.add(spriteGota);*/
 
       GotaBody gotaBody = GotaBody(posXY: Vector2(gota.x*wScale,gota.y*hScale),
-          tamWH: Vector2(32*wScale,32*hScale));
+          sizeWH: Vector2(32*wScale,32*hScale));
       //gotaBody.onBeginContact=InicioContactosDelJuego;
       add(gotaBody);
     }

@@ -3,60 +3,61 @@ import 'package:flame_forge2d/body_component.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 
-class TierraBody extends BodyComponent with ContactCallbacks
-{
-
+class TierraBody extends BodyComponent with ContactCallbacks {
+  // Objeto Tiled que representa la forma de la tierra
   TiledObject tiledBody;
-  Vector2 scales=Vector2(1, 1);
-  TierraBody({required this.tiledBody,required this.scales});
 
+  // Escala para ajustar el tamaño del cuerpo físico
+  Vector2 scales = Vector2(1, 1);
+
+  // Constructor
+  TierraBody({
+    required this.tiledBody,
+    required this.scales});
+
+  // Método para cargar recursos y configurar el cuerpo físico de la tierra
   @override
   Future<void> onLoad() {
-    // TODO: implement onLoad
-    renderBody=true;
+    renderBody = false;
     return super.onLoad();
   }
 
+  // Crear el cuerpo
   @override
   Body createBody() {
-
     late FixtureDef fixtureDef;
 
-
-    if(tiledBody.isRectangle){
-      PolygonShape shape=PolygonShape();
+    if (tiledBody.isRectangle) {
+      PolygonShape shape = PolygonShape();
       final vertices = [
         Vector2(0, 0),
-        Vector2(tiledBody.width*scales.x, 0),
-        Vector2(tiledBody.width*scales.x, tiledBody.height*scales.y),
-        Vector2(0, tiledBody.height*scales.y),
+        Vector2(tiledBody.width * scales.x, 0),
+        Vector2(tiledBody.width * scales.x, tiledBody.height * scales.y),
+        Vector2(0, tiledBody.height * scales.y),
       ];
       shape.set(vertices);
-      fixtureDef=FixtureDef(shape);
-    }
-
-
-    else if(tiledBody.isPolygon){
+      fixtureDef = FixtureDef(shape);
+    } else if (tiledBody.isPolygon) {
       ChainShape shape = ChainShape();
-      List<Vector2> vertices = [];
 
-      for(final point in tiledBody.polygon){
-        shape.vertices.add(Vector2(point.x*scales.x, point.y*scales.y));
+      for (final point in tiledBody.polygon) {
+        shape.vertices.add(Vector2(point.x * scales.x, point.y * scales.y));
       }
-      Point point0=tiledBody.polygon[0];
-      shape.vertices.add(Vector2(point0.x*scales.x, point0.y*scales.y));
+      Point point0 = tiledBody.polygon[0];
+      shape.vertices.add(Vector2(point0.x * scales.x, point0.y * scales.y));
 
-      fixtureDef=FixtureDef(shape);
+      fixtureDef = FixtureDef(shape);
     }
 
-    BodyDef definicionCuerpo=
-    BodyDef(position: Vector2(tiledBody.x*scales.x,tiledBody.y*scales.y),
-        type: BodyType.static);
-    Body cuerpo= world.createBody(definicionCuerpo);
+    // Definición del cuerpo físico
+    BodyDef bodyDefinition = BodyDef(
+      position: Vector2(tiledBody.x * scales.x, tiledBody.y * scales.y),
+      type: BodyType.static,
+    );
+    Body cuerpo = world.createBody(bodyDefinition);
 
-    fixtureDef.userData=this;
+    fixtureDef.userData = this;
 
-    //FixtureDef fixtureDef=FixtureDef(shape);
     cuerpo.createFixture(fixtureDef);
     return cuerpo;
   }
