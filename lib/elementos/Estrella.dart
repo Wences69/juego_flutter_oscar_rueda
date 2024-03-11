@@ -1,7 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
-
 import '../games/OscarGame.dart';
 
 class Estrella extends SpriteComponent with HasGameRef<OscarGame>, CollisionCallbacks {

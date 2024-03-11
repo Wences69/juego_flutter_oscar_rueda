@@ -1,8 +1,6 @@
-import 'dart:ui';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
-
 import '../games/OscarGame.dart';
 
 class Gota extends SpriteAnimationComponent with HasGameRef<OscarGame> {

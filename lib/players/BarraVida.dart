@@ -1,7 +1,5 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-
 import 'EmberPlayer.dart';
 
 class BarraVida extends PositionComponent {
@@ -20,13 +18,13 @@ class BarraVida extends PositionComponent {
       );
 
   @override
-  void render(Canvas c) {
+  void render(Canvas canvas) {
     final barraVidaWidth = 450.0 * sizeX;
     final barraVidaHeight = 48.0 * sizeY;
     final vidaActualWidth = (jugador.iVidas / 3) * barraVidaWidth;
 
     // Dibujar el contorno de la barra de vida
-    c.drawRect(
+    canvas.drawRect(
       Rect.fromPoints(
         Offset(offsetX * sizeX - 1, offsetY * sizeY - 1),
         Offset(offsetX * sizeX + barraVidaWidth + 2, offsetY * sizeY + barraVidaHeight + 2),
@@ -35,7 +33,7 @@ class BarraVida extends PositionComponent {
     );
 
     // Dibujar la barra de vida actual
-    c.drawRect(
+    canvas.drawRect(
       Rect.fromPoints(
         Offset(offsetX * sizeX, offsetY * sizeY),
         Offset(offsetX * sizeX + vidaActualWidth, offsetY * sizeY + barraVidaHeight),
@@ -53,14 +51,14 @@ class BarraVida extends PositionComponent {
     );
 
     textPainter.layout();
-    textPainter.paint(c, Offset(offsetXPaint * sizeX, offsetYPaint * sizeY));
+    textPainter.paint(canvas, Offset(offsetXPaint * sizeX, offsetYPaint * sizeY));
   }
 
   @override
   void update(double dt) {
     super.update(dt);
     // Mantener la posición de la barra de vida en la esquina superior izquierda con margen
-    this.x = 0;
-    this.y = 0;
+    x = 0;
+    y = 0;
   }
 }

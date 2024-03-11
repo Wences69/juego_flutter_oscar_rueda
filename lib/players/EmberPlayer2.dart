@@ -1,7 +1,5 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flame/extensions.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../elementos/Estrella.dart';
@@ -66,7 +64,7 @@ class EmberPlayer2 extends SpriteAnimationComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     // Manejar colisiones
     if (other is Gota) {
-      this.removeFromParent();
+      removeFromParent();
     } else if (other is Estrella) {
       other.removeFromParent();
     }

@@ -4,9 +4,7 @@ import 'package:juego_flutter_oscar_rueda/games/OscarGame.dart';
 
 void main() {
   runApp(
-    const GameWidget<OscarGame>.controlled(
-        gameFactory: OscarGame.new
-    )
+    const GameWidget<OscarGame>.controlled(gameFactory: OscarGame.new)
   );
 }
 

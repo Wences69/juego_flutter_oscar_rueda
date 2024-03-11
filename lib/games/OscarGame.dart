@@ -1,22 +1,15 @@
-import 'dart:ui';
-
-import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flame/game.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/services.dart';
 import 'package:juego_flutter_oscar_rueda/players/BarraVida2.dart';
-
 import '../bodies/GotaBody.dart';
 import '../bodies/TierraBody.dart';
 import '../elementos/Estrella.dart';
 import '../players/BarraVida.dart';
 import '../players/EmberPlayer.dart';
 import '../players/WaterPlayer.dart';
-
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:flame_forge2d/forge2d_game.dart';
 
 class OscarGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisionDetection {
   OscarGame();
@@ -38,7 +31,7 @@ class OscarGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollis
 
   @override
   Color backgroundColor() {
-    return const Color(0xFF000000);
+    return const Color(0xFFBA55D3);
   }
 
   @override
