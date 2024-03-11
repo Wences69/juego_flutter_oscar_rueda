@@ -4,7 +4,7 @@ import 'package:flutter/painting.dart';
 
 import 'EmberPlayer.dart';
 
-class BarraVida extends PositionComponent {
+class BarraVida2 extends PositionComponent {
   final EmberPlayerBody jugador;
   final double sizeX, sizeY;
   final double offsetX = 45.0;
@@ -13,7 +13,7 @@ class BarraVida extends PositionComponent {
   final double offsetYPaint = 12.0;
 
   // Constructor
-  BarraVida(
+  BarraVida2(
       this.jugador,
       this.sizeX,
       this.sizeY
@@ -46,7 +46,7 @@ class BarraVida extends PositionComponent {
     // Dibujar el texto encima de la barra de vida
     final textPainter = TextPainter(
       text: TextSpan(
-        text: 'Vidas del jugador1: ${jugador.iVidas}',
+        text: 'Vidas del jugador2: ${jugador.iVidas}',
         style: TextStyle(color: Colors.white, fontSize: 36 * sizeX),
       ),
       textDirection: TextDirection.ltr,
@@ -59,8 +59,8 @@ class BarraVida extends PositionComponent {
   @override
   void update(double dt) {
     super.update(dt);
-    // Mantener la posición de la barra de vida en la esquina superior izquierda con margen
-    this.x = 0;
+
+    this.x = 800;
     this.y = 0;
   }
 }

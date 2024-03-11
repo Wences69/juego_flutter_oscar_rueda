@@ -6,6 +6,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/services.dart';
+import 'package:juego_flutter_oscar_rueda/players/BarraVida2.dart';
 
 import '../bodies/GotaBody.dart';
 import '../bodies/TierraBody.dart';
@@ -29,14 +30,15 @@ class OscarGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollis
   double wScale = 1.0;
   double hScale = 1.0;
 
-  late EmberPlayerBody _player;
+  late EmberPlayerBody _player1;
   late EmberPlayerBody _player2;
   late WaterPlayer _water;
-  late BarraVida barraVida;
+  late BarraVida barraVidaPlayerUno;
+  late BarraVida2 barraVidaPlayerDos;
 
   @override
   Color backgroundColor() {
-    return const Color.fromARGB(255, 173, 223, 255);
+    return const Color(0xFF000000);
   }
 
   @override
@@ -94,7 +96,7 @@ class OscarGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollis
     }
 
     // Crear jugadores
-    _player = EmberPlayerBody(
+    _player1 = EmberPlayerBody(
       initialPosition: Vector2(200, gameHeight - gameHeight / 2),
       tamano: Vector2(64 * wScale, 64 * hScale),
       keyAbajo: LogicalKeyboardKey.keyS,
@@ -102,8 +104,8 @@ class OscarGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollis
       keyDerecha: LogicalKeyboardKey.keyD,
       keyIzquierda: LogicalKeyboardKey.keyA,
     );
-    _player.onBeginContact = InicioContactosDelJuego;
-    add(_player);
+    _player1.onBeginContact = InicioContactosDelJuego;
+    add(_player1);
 
     _water = WaterPlayer(
       position: Vector2(gameWidth / 2 - 50, gameHeight / 2 + 100),
@@ -122,15 +124,18 @@ class OscarGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollis
     add(_player2);
 
     // Barra de vida
-    barraVida = BarraVida(_player, wScale, hScale);
-    add(barraVida);
+    barraVidaPlayerUno = BarraVida(_player1, wScale, hScale);
+    add(barraVidaPlayerUno);
+
+    barraVidaPlayerDos = BarraVida2(_player2, wScale, hScale);
+    add(barraVidaPlayerDos);
   }
 
   void InicioContactosDelJuego(Object objeto, Contact contact) {
     if (objeto is GotaBody) {
-      _player.iVidas--;
-      if (_player.iVidas == 0) {
-        _player.removeFromParent();
+      _player1.iVidas--;
+      if (_player1.iVidas == 0) {
+        _player1.removeFromParent();
       }
     }
   }
