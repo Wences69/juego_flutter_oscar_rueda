@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import '../games/OscarGame.dart';
 
 class Estrella extends SpriteComponent with HasGameRef<OscarGame>, CollisionCallbacks {
-  final _defaultColor = Colors.red;
-
   // Hitbox
   late ShapeHitbox hitbox;
 
@@ -24,12 +22,12 @@ class Estrella extends SpriteComponent with HasGameRef<OscarGame>, CollisionCall
     anchor = Anchor.center;
 
     // Configuración de la hitbox
-    final defaultPaint = Paint()
-      ..color = _defaultColor
+    final transparentPaint = Paint()
+      ..color = Colors.transparent // Cambia a color transparente
       ..style = PaintingStyle.stroke;
 
     hitbox = RectangleHitbox()
-      ..paint = defaultPaint
+      ..paint = transparentPaint
       ..isSolid = true
       ..renderShape = true;
 

@@ -1,3 +1,4 @@
+
 import 'package:flame_forge2d/body_component.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:forge2d/src/dynamics/body.dart';
@@ -5,66 +6,75 @@ import 'package:forge2d/src/dynamics/body.dart';
 import '../elementos/Gota.dart';
 import '../games/OscarGame.dart';
 
-class GotaBody extends BodyComponent<OscarGame> with ContactCallbacks {
-  // Posición inicial
+
+class GotaBody extends BodyComponent<OscarGame> with ContactCallbacks{
   Vector2 posXY;
-
-  // Tamaño del cuerpo
-  Vector2 sizeWH;
-
-  // Variables para la animación
-  double xIni = 0;
-  double xFin = 0;
-  double xContador = 0;
-  double dAnimDireccion = -1;
-  double dVelocidadAnim = 1;
-
-  // Tamaño
-  double gotaSize;
-
-  // Tamaño predeterminado de la gota
+  Vector2 tamWH;
+  double xIni=0;
+  double xFin=0;
+  double xContador=0;
+  double dAnimDireccion=-1;
+  double dVelocidadAnim=1;
+  double tamano;
   final double tamanoPred = 15.75;
 
-  // Constructor
-  GotaBody({
-    required this.posXY,
-    required this.sizeWH,
-    required this.gotaSize
-  }) : super();
+  GotaBody({required this.posXY,required this.tamWH, required this.tamano}):super();
 
   @override
   Body createBody() {
-    BodyDef bodyDef = BodyDef(
-      type: BodyType.dynamic,
-      position: posXY,
-      gravityOverride: Vector2(0, 0),
-    );
-    Body cuerpo = world.createBody(bodyDef);
-    CircleShape shape = CircleShape();
-    shape.radius = sizeWH.x / 2;
-    Fixture fix = cuerpo.createFixtureFromShape(shape);
-    fix.userData = this;
+    // TODO: implement createBody
+
+    BodyDef bodyDef = BodyDef(type: BodyType.dynamic,position: posXY,gravityOverride: Vector2(0,0));
+    Body cuerpo=world.createBody(bodyDef);
+    CircleShape shape=CircleShape();
+    shape.radius=tamWH.x/2;
+
+    // userData: this, // To be able to determine object in collision
+    Fixture fix=cuerpo.createFixtureFromShape(shape);
+    //fix.density=100;
+    //fix.restitution=5.0;
+    fix.userData=this;
+
     return cuerpo;
   }
 
-  // Método para cargar recursos y configurar la animación
   @override
-  Future<void> onLoad() async {
-    renderBody = false;
+  Future<void> onLoad() async{
+    renderBody=false;
+    // TODO: implement onLoad
     await super.onLoad();
 
-    // Crear y agregar la representación visual de la gota al componente
-    Gota gotaPlayer = Gota(position: Vector2.all(-(tamanoPred * gotaSize)), size: sizeWH);
+    Gota gotaPlayer=Gota(position: Vector2.all(-(tamanoPred * tamano)), size: tamWH);
     add(gotaPlayer);
 
-    // Inicializar variables de animación
-    xIni = posXY.x;
-    xFin = 40;
-    xContador = 0;
+    xIni=posXY.x;
+    xFin=(40);
+    xContador=0;
+
   }
 
   @override
   void update(double dt) {
+    // TODO: implement update
     super.update(dt);
+
+    /*if(dAnimDireccion<0){
+      xContador=xContador+dVelocidadAnim;
+      //body.applyLinearImpulse(-Vector2(dVelocidadAnim, dVelocidadAnim));
+      center.sub(Vector2(dVelocidadAnim, dVelocidadAnim));
+    }
+    else{
+      xContador=xContador+dVelocidadAnim;
+      //body.applyLinearImpulse(Vector2(dVelocidadAnim, dVelocidadAnim));
+      center.add(Vector2(dVelocidadAnim, dVelocidadAnim));
+    }
+
+    if(xContador>xFin){
+      xContador=0;
+      dAnimDireccion=dAnimDireccion*-1;
+    }*/
+
   }
+
+
 }
